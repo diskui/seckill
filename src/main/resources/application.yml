@@ -1,0 +1,103 @@
+
+spring:
+  #静态资源处理
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 3600
+      chain:
+        #资源链缓存
+        cache: true
+        #启用资源链
+        enabled: true
+        #压缩资源
+        compressed: true
+      static-locations: classpath:/static/
+
+  # themeleaf configuration
+  thymeleaf:
+    # trun off cache
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 
+    username: admin
+    password: 1
+# ali cloud server
+#    password: Hash("2022");
+    # database connection pool
+    hikari:
+      pool-name: DataHikariCP
+      # mix namber of idles
+      minimum-idle: 5
+      # the timeout of idle, default is 3600000
+      idle-timeout: 1800000
+      # the max number of connection
+      max-pool-size: 10
+      auto-commit: true
+      # 0 for forever, default is 180000
+      max-lifetime: 1800000
+      # default is 30000
+      connection-timeout: 30000
+      # the test query of status of connection
+      connection-test-query: SELECT 1
+
+  redis:
+    host: 
+    port: 6379
+    database: 0
+    timeout: 18000ms
+    password: 
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 10000ms
+        max-idle: 200
+        min-idle: 5
+  # rabbitmq
+  rabbitmq:
+    # 服务器
+    host:
+    username: 
+    password: 
+    virtual-host: /
+    port: 5672
+    listener:
+      simple:
+        #消费者最小数量
+        concurrency: 10
+        #最大数量
+        max-concurrency: 10
+        #限制消费者每次只能处理一条消息，处理完毕再处理下一条消息
+        prefetch: 1
+        #启动时是否默认启动容器
+        auto-startup: true
+        #被拒绝时重新进入队列
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        # 重试时间
+        initial-interval: 1000ms
+        # 重试最大次数
+        max-attempts: 3
+        # 重试最大间隔时间
+        max-interval: 10000ms
+        # 重试的间隔乘数
+        multiplier: 1
+
+
+
+
+mybatis-plus:
+  # configure where the Mapper.xml map to
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  # the alias of the type of return data(default is class name)
+  type-aliases-package: com.example.seckill.pojo
+
+
+# MyBatis SQL printing
+logging:
+  level:
+    com.example.seckill.mapper: debug
